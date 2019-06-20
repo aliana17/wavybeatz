@@ -1,0 +1,25 @@
+{% extends 'music/base.html' %}
+{% block body %}
+    <div class="albums-container container-fluid">
+        <!-- Albums -->
+        <h3>All Albums:</h3>
+            <div class="row">
+            {% for album in all_Albums %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                            <a href="{% url 'music:detail' album.id %}">
+                                    <img src="{{ album.album_logo.url }}" class="img-responsive" style="width:500px;height:250px;">
+                            </a>
+                            <div class="caption">
+                                <h4>{{ album.album_title }}</h4>
+                                {{ album.artist }}
+                            </div>
+                            <a href="{% url 'music:detail' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                    </div>   
+                </div> 
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}  
+            </div>                   
+            
+    </div>          
+{% endblock %}    

@@ -1,0 +1,64 @@
+{% extends 'music/base.html' %}
+{% block title%}Album Details{% endblock %}
+{% block body %}
+    <div class="container-fluid songs-container">
+        <div class="row">
+            <!-- Left Album Info -->
+            <div class="col-sm-4 col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel body">
+                        {% if album.album_logo %}
+                            <img src="{{ album.album_logo.url }}" style="width:270px;height:250px;background-color:rgba(139, 133, 132, 0.952);">
+                        {% else %}
+                            <h3>OOPS !! NO image to display</h3>  
+                        {% endif %}  
+                        <h2>{{ album.album_title }} <small>{{ album.genre }}</small></h2>
+                        <h3>{{ album.artist }}</h3>    
+                    </div>    
+                </div>   
+            </div> 
+
+            <div class="col-sm-6 col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel body">
+                            <h3>All Songs</h3>
+                            {% if error_message %}
+                                <p><strong>error_message</strong></p>
+                            {% endif %}   
+                            
+                            <table class="table">
+                                <thread>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Audio File</th>
+                                    </tr>
+                                </thread>    
+                                <tbody>
+                                        {% for song in album.song_set.all %}
+                                            <tr>
+                                               <td>{{ song.song_title }}</td> 
+                                               <td>
+                                                   <!-- <a target="_blank" href="{{ song.audio_file.url }}">
+                                                        <button type="button" class="btn btn-success btn-xs">
+                                                            <span class="glyphicon glyphicon-play"></span>&nbsp; Play
+                                                        </button>
+                                                    </a> -->
+                                                    <audio controls>
+                                                            <source src="{{ song.audio_file.url }}" type="audio/mp3">
+                                                            <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                                                        
+                                                    </audio>
+                                                </td>
+                                            </tr> 
+                                        {% endfor %}
+                                </tbody>
+                                
+                            </table>    
+                            
+                        </div> 
+                    </div>       
+            </div>
+        </div>    
+    </div>
+    
+{% endblock %}     
