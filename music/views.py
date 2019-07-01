@@ -57,6 +57,27 @@ from django.contrib.auth import authenticate,login
 from django.views.generic import View
 from .models import Album, Song
 from .forms import UserForm
+from django.contrib import messages
+
+def songs(request, filter_by):
+    if not request.user.is_authenticated():
+        return render(request, 'music/login.html')
+    else:
+        try:
+            song_ids = []
+            for album in Album.objects.filter(user=request.user):
+                for song in album.song_set.all():
+                    song_ids.append(song.pk)
+            users_songs = Song.objects.filter(pk__in=song_ids)
+            if filter_by == 'favorites':
+                users_songs = users_songs.filter(is_favorite=True)
+        except Album.DoesNotExist:
+            users_songs = []
+        return render(request, 'music/songs.html', {
+            'song_list': users_songs,
+            'filter_by': filter_by,
+        })   
+
 
 class IndexView(ListView):
     template_name="music/index.html"
@@ -72,6 +93,7 @@ class DetailView(DetailView):
 class AlbumCreate(CreateView):
     model=Album
     fields=['artist','album_title','genre','album_logo'] 
+
 
 class UserFormView(View):
     form_class=UserForm
@@ -90,8 +112,8 @@ class UserFormView(View):
             user=form.save(commit=False)
 
             #cleaned (normalized) data
-            username=form.cleaned_data['username']
-            password=form.cleaned_data['password']
+            username=form.cleaned_data.get('username')
+            password=form.cleaned_data.get('password')
         
             user.set_password(password)
             user.save()
@@ -99,12 +121,8 @@ class UserFormView(View):
             #returns User objects if credentials are correct
 
             user=authenticate(username=username,password=password)
-
-            if user is not None:
-
-                if user.is_active:
-                    login(request,user)
-                    return redirect('music:index')
+            messages.success(request,'Your account has been created! You are now able to log in.')
+            return redirect('music:login')
         return render(request,self.template_name,{'form':form})            
                    
 

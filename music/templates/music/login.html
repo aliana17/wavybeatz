@@ -1,13 +1,13 @@
 {% extends 'music/base.html' %}
-{% block title %}Sign Up{% endblock %}
+{% block title %}Login{% endblock %}
 {% load crispy_forms_tags %}
 {% block body %}
-    <div class="container-fluid"> 
-        <div class="row-md-12">
-            <div class="col-sm-12 col-md-7">
+    <div class="content-section"> 
+        <div class="row-md-10">
+            <div class="col-sm-12 col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <h3>Create a new Account</h3>
+                        <h3>Login to your account</h3>
                         {% if error_message %}
                             <p><strong>{{error_message }}</strong></p>
                         {% endif %}
@@ -16,14 +16,13 @@
                             {{ form|crispy }}
                             <div class="form-group" >
                                 <div class="col-sm-offset-2 col-sm-10" >
-                                    <button type="submit" class="btn btn-success">Sign Up</button>
+                                    <button type="submit" class="btn btn-success">Login</button>
                                 </div>
                             </div>   
-
                         </form>
                         <div class="border-top pt-3">
                                 <small class="text-muted">
-                                    Already have an account? <a class="ml-2" href="{% url 'music:login'%}">Login</a>
+                                    Don't have an account? <a class="ml-2" href="{% url 'music:register'%}" >Sign Up</a>
                                 </small>
                         </div>
                     </div>

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'crispy_forms',
     'django.contrib.staticfiles',
 ]
 
@@ -119,4 +120,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+CRISPY_TEMPLATE_PACK='bootstrap3'
+
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL='music:index'

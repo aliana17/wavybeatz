@@ -1,0 +1,10 @@
+{% extends 'music/base.html' %}
+{% block title %}Sign Up{% endblock %}
+{% block body %}
+    <h2>You have been Logged out</h2>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                <h3>Login in again? <a class="ml-2" href="{% url 'music:login'%}">Login</a></h3>
+            </small>
+        </div>
+{% endblock %}
